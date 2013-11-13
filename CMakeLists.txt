@@ -1,9 +1,30 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-
-# Context
-SET(CMAKE_BUILD_TYPE Release)
-#SET(CMAKE_CXX_FLAGS_RELEASE "-O3 -funroll-loops -Wall -Wextra")
 PROJECT(LopetteRobot C)
+
+IF(MODE MATCHES ARDUINO)
+	MESSAGE("ARDUINO MODE")
+	# Context
+	SET(CMAKE_SYSTEM_VERSION 1)
+	SET(CMAKE_FIND_ROOT_PATH /usr/lib/gcc/avr )
+	SET(CMAKE_C_COMPILER avr-gcc)
+	# search for programs in the build host directories
+	SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+	# for libraries and headers in the target directories
+	SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+	SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+	SET(CSTANDARD "-std=gnu99")
+	SET(CDEBUG "-gstabs")
+	SET(CWARN "-Wall")
+	SET(CTUNING "-funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums")
+	SET(COPT "-Os")
+	SET(CMCU "-mmcu=atmega8")
+	SET(CDEFS "-DF_CPU=32000000")
+	SET(CFLAGS "${CMCU} ${CDEBUG} ${CDEFS} ${CINCS} ${COPT} ${CWARN} ${CSTANDARD} ${CEXTRA}") 
+	SET(CMAKE_C_FLAGS  ${CFLAGS})
+	SET(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
+ELSE(MODE MATCHES ARDUINO)
+	MESSAGE("PC MODE")
+ENDIF(MODE MATCHES ARDUINO)
 
 # Locate the sources
 #FIND_PACKAGE(OpenCV 2 REQUIRED opencv_core opencv_highgui opencv_imgproc)
@@ -33,3 +54,4 @@ SET_PROPERTY(TARGET LopetteRobot PROPERTY RUNTIME_OUTPUT_DIRECTORY bin)
 #FOREACH (_variableName ${_variableNames})
 #    MESSAGE(STATUS "${_variableName}=${${_variableName}}")
 #ENDFOREACH()
+#*****************END***************

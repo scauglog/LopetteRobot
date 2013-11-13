@@ -1,0 +1,25 @@
+1b(D) + 4b(2:13) + 1b(H/L)
+1b(D) + 4b(2:13) + 1b(   )
+
+1b(A) + 1b(W) + 3b(0:5)  + 8b(value)
+1b(A) + 1b(R) + 3b(0:5)  + 8b(     )
+
+analogueReference(): +3b(TYPE)
+
+pinMode: +4b(0:13)+2b(MODE)
+
+interupts: +1b(Y/N)
+
+attachInterrupt(interrupt, function, mode);???
+
+analogReadResolution: +10b(bit nb)
+
+analogReadResolution: +10b(bit nb)
+
+//tone()+4b(pins)+32b(unsigned int)+64b(unsigned long)
+//noTone()+4b(pin)
+//shiftOut()
+//shiftIn()
+//pulseIn();
+
+

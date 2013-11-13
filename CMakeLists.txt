@@ -3,11 +3,11 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 # Context
 SET(CMAKE_BUILD_TYPE Release)
 #SET(CMAKE_CXX_FLAGS_RELEASE "-O3 -funroll-loops -Wall -Wextra")
-PROJECT(Cypher C)
+PROJECT(LopetteRobot C)
 
 # Locate the sources
 #FIND_PACKAGE(OpenCV 2 REQUIRED opencv_core opencv_highgui opencv_imgproc)
-FILE(GLOB_RECURSE source_files src/*.cpp)
+FILE(GLOB_RECURSE source_files src/*.c)
 
 # Libraries headers
 #INCLUDE_DIRECTORIES(/usr/include/opencv2) # (manually)
@@ -18,12 +18,12 @@ FILE(GLOB_RECURSE source_files src/*.cpp)
 #LINK_DIRECTORIES(${OpenCV_LIBRARIES})
 
 # Define the executable
-ADD_EXECUTABLE(Cypher ${source_files})
-SET_PROPERTY(TARGET Cypher PROPERTY RUNTIME_OUTPUT_DIRECTORY bin)
+ADD_EXECUTABLE(LopetteRobot ${source_files})
+SET_PROPERTY(TARGET LopetteRobot PROPERTY RUNTIME_OUTPUT_DIRECTORY bin)
 
 # Compile options
-#TARGET_LINK_LIBRARIES(Cypher opencv_core opencv_highgui opencv_imgproc) # (manually)
-#TARGET_LINK_LIBRARIES(Cypher ${OpenCV_LINK_DIRECTORIES})
+#TARGET_LINK_LIBRARIES(LopetteRobot opencv_core opencv_highgui opencv_imgproc) # (manually)
+#TARGET_LINK_LIBRARIES(LopetteRobot ${OpenCV_LINK_DIRECTORIES})
 
 
 #******************DEBUG******************

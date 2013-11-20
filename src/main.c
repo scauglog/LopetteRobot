@@ -1,5 +1,3 @@
-#define F_CPU 16000000UL                                    /* Clock Frequency = 16Mhz */
-
 #include <inttypes.h>
 #include <avr/io.h>
 #include <util/delay.h>

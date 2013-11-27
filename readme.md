@@ -1,5 +1,6 @@
 Projet SE
 création d'un pilote et un firmware pour Lopette
+PROTOCOLE -> gregwar.com/protocol
 
 Pour compiler le projet :
 $ cd build

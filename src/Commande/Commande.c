@@ -16,7 +16,7 @@ char getProtocolVersion(char minSupported, char maxSupported){
  *@return ok (see definition in PROTOCOLE)
  **/
 char reset(char type){
-  return OK;
+  return 'a';
 }
 
 /* /\** */

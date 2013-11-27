@@ -8,6 +8,17 @@
 #ifndef _COMMON_H_
 #define _COMMON_H_
 
-#define OK 0x1f //0001xxxx
+#ifdef ARDUINO
+#include <avr/io.h>
+#include <util/delay.h>
+#include <avr/interrupt.h>
+#else
+#include <stdio.h>
+#include <stdlib.h>
+#endif
+
+#include "Parse/Parse.h"
+#include "Commande/Commande.h"
+#include "BindingAVR/BindingAVR.h"
 
 #endif

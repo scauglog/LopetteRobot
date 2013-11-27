@@ -18,5 +18,6 @@ $ cmake ..                # pour utiliser le mode de compilation précédemment 
 $ make
 
 $ ./bin/LopetteRobot
+avr-objcopy -O binary bin/LopetteRobot bin/LopetteRobot.bin
 
-avrdude -p m8 -c arduino -P /dev/ttyUSB -b 19200  -U flash:w:bin/LopetteRobot
+avrdude -p m8 -c arduino -P /dev/ttyUSB -b 19200  -U flash:w:bin/LopetteRobot.bin

@@ -15,14 +15,46 @@ char getProtocolVersion(char minSupported, char maxSupported);
  **/
 char reset(char type);
 /**
- *@param
+ *@param states state of each pin (ex: first char -> 1-to-4 pin state) to set in safe mode
+ *@param values set of default values for each pin
+ *@return ok
  **/
-int failSafe(char states[6], char *values);
+char failSafe(char states[6], char *values);
 
-int setMode();
-int setHeartBeat();
-int heartBeat();
-int setState();
+/**
+ *@param mode synchrone or asynchrone
+ *@return ok
+ **/
+char setMode(char mode);
+
+/**
+ *@param frequency heartbeat (on the last 4b of the char)
+ *@return ok
+ **/
+char setHeartBeat(char frequency);
+
+/**
+ *@return heartbeat on 4b
+ **/
+char heartBeat();
+
+/**
+ *@param state
+ *@param pinId
+ *@param values
+ *@return ok
+ **/
+char setStateMask(char state, char pinId);
+
+/**
+ *@param state
+ *@param mask
+ *@param values
+ *@return ok
+ **/
+char setStateNoMask(char state, char mask, char *values);
+
+
 int getState();
 int read();
 int write();

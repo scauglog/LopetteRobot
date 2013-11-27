@@ -70,3 +70,13 @@ SET_PROPERTY(TARGET LopetteRobot PROPERTY RUNTIME_OUTPUT_DIRECTORY bin)
 #    MESSAGE(STATUS "${_variableName}=${${_variableName}}")
 #ENDFOREACH()
 #*****************END***************
+
+
+# IF(MODE MATCHES ARDUINO)
+#   ADD_CUSTOM_COMMAND(
+#     OUTPUT LopetteRobot.bin
+#     COMMAND avr-objcopy -O binary bin/LopetteRobot bin/LopetteRobot.bin && avrdude -p m8 -c arduino -P /dev/ttyUSB0 -U flash:w:bin/LopetteRobot.bin
+#     DEPENDS LopetteRobot
+#     )
+#   ADD_CUSTOM_TARGET(LopetteRobot.bin)
+# ENDIF(MODE MATCHES ARDUINO)

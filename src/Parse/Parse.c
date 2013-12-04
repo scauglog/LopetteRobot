@@ -10,13 +10,16 @@ void write(char i){
 }
 
 #ifdef ARDUINO
-//ISR(UART_RXC){
-  //char a;
-  //a=UDR;
-//  if(1){
-//    PORTB = 0b00100000;
-//  }
-//  else
-//    PORTB = 0b00000000;
-//}
+ISR(USART_RXC_vect){
+  char a;
+  a=UDR;//store the receive char in: a
+  if(a=='O'){
+    PORTB = 0b00100000;
+    write('A');
+  }
+  if(a=='C'){
+    PORTB = 0b00000000;
+    write('E');
+  }
+}
 #endif

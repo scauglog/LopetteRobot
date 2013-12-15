@@ -39,6 +39,7 @@ IF(MODE MATCHES ARDUINO)
   # SET(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
 ELSE(MODE MATCHES ARDUINO)
   MESSAGE("PC MODE")
+  SET(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "-lpthread")
 ENDIF(MODE MATCHES ARDUINO)
 
 # Locate the sources
@@ -59,7 +60,7 @@ SET_PROPERTY(TARGET LopetteRobot PROPERTY RUNTIME_OUTPUT_DIRECTORY bin)
 
 # Compile options
 #TARGET_LINK_LIBRARIES(LopetteRobot opencv_core opencv_highgui opencv_imgproc) # (manually)
-#TARGET_LINK_LIBRARIES(LopetteRobot ${OpenCV_LINK_DIRECTORIES})
+#TARGET_LINK_LIBRARIES(LopetteRobot pthread)
 
 
 #******************DEBUG******************

@@ -12,13 +12,18 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
+#define NULL 0
 #else
 #include <stdio.h>
 #include <stdlib.h>
+#include <pthread.h>
 #endif
 
-#include "Parse/Parse.h"
+#include <stdbool.h>
+#include <assert.h>
+#include "queue.h"
 #include "Commande/Commande.h"
+#include "Parse/Parse.h"
 #include "BindingAVR/BindingAVR.h"
 
 #endif

@@ -5,7 +5,7 @@ void write(char i){
   UDR=i;
   while(!(UCSRA&(1<<UDRE)));
 #else
-  fprintf(stdout,"j'ecris : %c\n",i);
+  fprintf(stdout,"%c ", i);
   fflush(stdout);
 #endif
 }

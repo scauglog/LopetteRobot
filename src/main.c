@@ -13,20 +13,51 @@
 
 char rx[MAXBUFFERSIZE] = {0};
 int rxn = 0;
- 
+
+void initiateParse(void){
+  if(rxn == 0 || rxn == 1){
+  }
+  else if(1 <= rxn && rxn < MAXBUFFERSIZE){
+    int size = (rx[1] << 8) | (rx[2] << 0);
+    if(rxn == size+4){
+      write('P');
+      write('A');
+      write('R');
+      write('S');
+      write('E');
+      int i = 0;
+      //for(; i < size+4; i++) //DEBUG
+      //x[i] = 0;
+      rxn = 0;
+    }
+    else{
+      int i = 0;
+      for(;i<size+4;i++)
+	write(rx[i]);
+      write('\n');
+    }
+  }
+  else{
+    write(0xFF);
+  }
+  rxn = (rxn + 1) % MAXBUFFERSIZE;
+}
+
 #ifdef ARDUINO
 //maybe 16-1 for other baudrate than 115200
-void USART_init (unsigned int ubrr) { 
-  UBRRH = (unsigned char)(ubrr >> 8); // Load upper 8-bits of the baud rate value into the high byte of the UBRR register 
-  UBRRL = (unsigned char)(ubrr&0xff); // Load lower 8-bits of the baud rate value into the low byte of the UBRR register 
+void USART_init (unsigned int ubrr){
+  // Load upper 8-bits of the baud rate value into the high byte of the UBRR register 
+  UBRRH = (unsigned char)(ubrr >> 8);
+  // Load lower 8-bits of the baud rate value into the low byte of the UBRR register 
+  UBRRL = (unsigned char)(ubrr&0xff);
 }
 
 /**
  * Manage interruptions filling the command's queue
  **/
 ISR(USART_RXC_vect){
-  rx[rxn] = UDR;//store the receive char in: a
-  rxn = (rxn+1) % MAXBUFFERSIZE;
+  rx[rxn] = UDR; //store the receive char in: a
+  initiateParse();
 }
 #else
 
@@ -34,9 +65,8 @@ void* routine (void* parma){
   while(true){
     char c;
     while((c = fgetc(stdin)) == EOF);
-    fprintf(stdout, "je lis %c\n", c);
     rx[rxn] = c;
-    rxn = (rxn + 1) % MAXBUFFERSIZE;
+    initiateParse();
   }
   return NULL;
 }
@@ -63,9 +93,9 @@ int main(void){
 #endif
 
   while(true){
-    while(rxn == 0);
-    write(rx[rxn]);
-    rx[rxn] = 0;
-    rxn = (rxn-1) % MAXBUFFERSIZE;
+    //while(rxn == 0);
+    //write(rx[rxn]);
+    //rx[rxn] = 0;
+    //rxn = (rxn-1) % MAXBUFFERSIZE;
   }
 }

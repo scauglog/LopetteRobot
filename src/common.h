@@ -23,5 +23,5 @@
 #include "Commande/Commande.h"
 #include "Parse/Parse.h"
 #include "BindingAVR/BindingAVR.h"
-#define MAXBUFFERSIZE
+#define MAXBUFFERSIZE 50
 #endif

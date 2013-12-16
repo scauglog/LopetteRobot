@@ -13,6 +13,7 @@
 
 char rx[MAXBUFFERSIZE] = {0};
 int rxn = 0;
+
  
 #ifdef ARDUINO
 //maybe 16-1 for other baudrate than 115200
@@ -27,6 +28,7 @@ void USART_init (unsigned int ubrr) {
 ISR(USART_RXC_vect){
   rx[rxn] = UDR;//store the receive char in: a
   rxn = (rxn+1) % MAXBUFFERSIZE;
+  if(
 }
 #else
 
@@ -61,11 +63,12 @@ int main(void){
 #else
   set_PC();
 #endif
-
-  while(true){
+  rx[0]=0b00010000;
+  parse();
+  /*while(true){
     while(rxn == 0);
     write(rx[rxn]);
     rx[rxn] = 0;
     rxn = (rxn-1) % MAXBUFFERSIZE;
-  }
+    }*/
 }

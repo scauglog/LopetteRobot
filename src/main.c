@@ -20,12 +20,8 @@ void initiateParse(void){
   else if(1 <= rxn && rxn < MAXBUFFERSIZE){
     int size = (rx[1] << 8) | (rx[2] << 0);
     if(rxn == size+4){
-      write('P');
-      write('A');
-      write('R');
-      write('S');
-      write('E');
-      int i = 0;
+      parse();
+      //int i = 0;
       //for(; i < size+4; i++) //DEBUG
       //x[i] = 0;
       rxn = 0;
@@ -33,12 +29,12 @@ void initiateParse(void){
     else{
       int i = 0;
       for(;i<size+4;i++)
-	write(rx[i]);
-      write('\n');
+	writeSerial(rx[i]);
+      writeSerial('\n');
     }
   }
   else{
-    write(0xFF);
+    writeSerial(0xFF);
   }
   rxn = (rxn + 1) % MAXBUFFERSIZE;
 }
@@ -93,9 +89,10 @@ int main(void){
 #endif
 
   while(true){
-    //while(rxn == 0);
-    //write(rx[rxn]);
-    //rx[rxn] = 0;
-    //rxn = (rxn-1) % MAXBUFFERSIZE;
   }
+
+  /* TEST UNITAIRE PARSE :
+     rx[0]=0b00010000;
+     parse();
+  */
 }

@@ -8,6 +8,9 @@
 #ifndef _COMMON_H_
 #define _COMMON_H_
 
+#include <stdint.h>
+#include <stdbool.h>
+
 #ifdef ARDUINO
 #include <avr/io.h>
 #include <util/delay.h>
@@ -19,9 +22,12 @@
 #include <pthread.h>
 #endif
 
-#include <stdbool.h>
 #include "Commande/Commande.h"
 #include "Parse/Parse.h"
 #include "BindingAVR/BindingAVR.h"
 #define MAXBUFFERSIZE 50
+
+extern char rx[MAXBUFFERSIZE];
+extern int rxn;
+
 #endif

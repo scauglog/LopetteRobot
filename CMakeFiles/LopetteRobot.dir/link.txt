@@ -1,1 +1,0 @@
-avr-gcc  -mmcu=atmega8 -gstabs -DF_CPU=16000000 -DARDUINO -I/libarduino -Os -Wall -Wstrict-prototypes -std=gnu99     CMakeFiles/LopetteRobot.dir/src/Commande/Commande.c.o CMakeFiles/LopetteRobot.dir/src/Parse/Parse.c.o CMakeFiles/LopetteRobot.dir/src/main.c.o CMakeFiles/LopetteRobot.dir/src/queue.c.o CMakeFiles/LopetteRobot.dir/src/BindingAVR/BindingAVR.c.o  -o bin/LopetteRobot  

@@ -11,7 +11,8 @@
 #define USART_BAUDRATE 115200 
 #define BAUD_PRESCALE (FOSC/USART_BAUDRATE/16)
 
-queue command;
+char rx[MAXBUFFERSIZE] = {0};
+int rxn = 0;
  
 #ifdef ARDUINO
 //maybe 16-1 for other baudrate than 115200
@@ -24,17 +25,18 @@ void USART_init (unsigned int ubrr) {
  * Manage interruptions filling the command's queue
  **/
 ISR(USART_RXC_vect){
-  char a;
-  a=UDR;//store the receive char in: a
-  push(command, a);
+  rx[rxn] = UDR;//store the receive char in: a
+  rxn = (rxn+1) % MAXBUFFERSIZE;
 }
 #else
+
 void* routine (void* parma){
   while(true){
     char c;
     while((c = fgetc(stdin)) == EOF);
     fprintf(stdout, "je lis %c\n", c);
-    push(command, c);
+    rx[rxn] = c;
+    rxn = (rxn + 1) % MAXBUFFERSIZE;
   }
   return NULL;
 }
@@ -49,8 +51,6 @@ void set_PC(void){
 #endif
 
 int main(void){
-  command = create_queue();
-
 #ifdef ARDUINO
   // Definitions 
   USART_init(BAUD_PRESCALE);
@@ -61,23 +61,11 @@ int main(void){
 #else
   set_PC();
 #endif
-  
-  char c;
 
   while(true){
-    while(is_empty(command));
-    c = top(command);
-    write(c);
-    pop(command);
+    while(rxn == 0);
+    write(rx[rxn]);
+    rx[rxn] = 0;
+    rxn = (rxn-1) % MAXBUFFERSIZE;
   }
-  
-  /*
-    while (42) {
-    delay()
-    execute(command);
-    //break;
-    */
-  
-  delete_queue(command);
 }
-

@@ -20,10 +20,8 @@
 #endif
 
 #include <stdbool.h>
-#include <assert.h>
-#include "queue.h"
 #include "Commande/Commande.h"
 #include "Parse/Parse.h"
 #include "BindingAVR/BindingAVR.h"
-
+#define MAXBUFFERSIZE
 #endif

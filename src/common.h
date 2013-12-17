@@ -9,6 +9,8 @@
 #define _COMMON_H_
 
 #include <stdint.h>
+#include <stdbool.h>
+
 #ifdef ARDUINO
 #include <avr/io.h>
 #include <util/delay.h>
@@ -18,16 +20,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+extern uint8_t DDRB;
+extern uint8_t DDRD;
+extern uint8_t PORTB;
+extern uint8_t PORTD;
 #endif
 
-
-#include <stdbool.h>
-#include "Commande/Commande.h"
-#include "Parse/Parse.h"
-#include "BindingAVR/BindingAVR.h"
 #define MAXBUFFERSIZE 50
+#define PINSNUMBER 16
 
+struct Pin{
+	uint8_t type;
+	uint16_t value;
+	char port;
+	uint8_t number;
+};
+
+extern struct Pin pins[PINSNUMBER]; 
 extern char rx[MAXBUFFERSIZE];
 extern int rxn;
 
+#include "Commande/Commande.h"
+#include "BindingAVR/BindingAVR.h"
+#include "Parse/Parse.h"
+
 #endif
+
+

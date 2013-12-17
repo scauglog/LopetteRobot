@@ -9,6 +9,6 @@
 
 #include "../common.h"
 
-void write(char i);
-
+void writeSerial(char i);
+void parse(void);
 #endif

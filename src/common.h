@@ -21,13 +21,15 @@
 #include <stdlib.h>
 #include <pthread.h>
 extern uint8_t DDRB;
+extern uint8_t DDRC;
 extern uint8_t DDRD;
 extern uint8_t PORTB;
+extern uint8_t PORTC;
 extern uint8_t PORTD;
 #endif
 
 #define MAXBUFFERSIZE 50
-#define PINSNUMBER 16
+#define PINSNUMBER 23
 
 struct Pin{
 	uint8_t type;

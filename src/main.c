@@ -13,8 +13,10 @@
 
 #ifndef ARDUINO
 uint8_t DDRB;
+uint8_t DDRC;
 uint8_t DDRD;
 uint8_t PORTB;
+uint8_t PORTC;
 uint8_t PORTD;
 #endif
 
@@ -92,20 +94,31 @@ int main(void){
   
   UCSRB = (1<<RXCIE)|(1<<RXEN)|(1<<TXEN);
   sei();//system enable interrupt
-  SetPortB(0b11111111);
-  SetPortD(0b11111111);
+  SetPort('B',0b11111111);
+  SetPort('C',0b11111111);
+  SetPort('D',0b11111111);
+
 #else
   Set_PC();
 #endif
   PORTB=(0b00000000);
+  PORTC=(0b00000000);
   PORTD=(0b00000000);
   InitPins();
   uint8_t PWM8=0;
   uint16_t PWM16=0;
-  SetPin(0,true);
-  SetPin(8,true);
-  SetPin(0,false);
-  
+  /*TEST UNITAIRE SetPIN :
+  SetPin(2,true);
+  SetPin(2,false);
+  SetPin(12,true);
+  SetPin(12,false);
+  SetPin(22,true);
+  SetPin(22,false);
+  SetPin(21,true);
+  SetPin(20,true);
+  SetPin(19,true);
+  SetPin(20,false);
+  */
   while(true){
     CheckPWM(PWM8,PWM16);
     PWM8++;

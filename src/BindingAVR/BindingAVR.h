@@ -7,4 +7,9 @@
 
 #include "../common.h"
 
-void setPortB(char values);
+void SetPortB(char values);
+void SetPortD(char values);
+void SetPin(uint16_t pinNumber, bool value);
+void InitPins(void);
+void PrintPins(uint8_t pin);
+void CheckPWM(uint8_t pwm8, uint16_t pwm16);

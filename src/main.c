@@ -11,9 +11,18 @@
 #define USART_BAUDRATE 115200 
 #define BAUD_PRESCALE (FOSC/USART_BAUDRATE/16)
 
+#ifndef ARDUINO
+uint8_t DDRB;
+uint8_t DDRD;
+uint8_t PORTB;
+uint8_t PORTD;
+#endif
+
 char rx[MAXBUFFERSIZE] = {0};
 int rxn = 0;
- 
+struct Pin pins[PINSNUMBER]; 
+
+
 #ifdef ARDUINO
 //maybe 16-1 for other baudrate than 115200
 void USART_init (unsigned int ubrr) { 
@@ -41,7 +50,7 @@ void* routine (void* parma){
   return NULL;
 }
 
-void set_PC(void){
+void Set_PC(void){
   fprintf(stdout, "Listenning...\n");
   pthread_t thread;
   pthread_attr_t attr;
@@ -57,15 +66,24 @@ int main(void){
   
   UCSRB = (1<<RXCIE)|(1<<RXEN)|(1<<TXEN);
   sei();//system enable interrupt
-  setPortB(0b11111111);
+  SetPortB(0b11111111);
+  SetPortD(0b11111111);
 #else
-  set_PC();
+  Set_PC();
 #endif
-
+  PORTB=(0b00000000);
+  PORTD=(0b00000000);
+  InitPins();
+  uint8_t PWM8=0;
+  uint16_t PWM16=0;
+  SetPin(0,true);
+  SetPin(8,true);
+  SetPin(0,false);
   while(true){
-    while(rxn == 0);
-    write(rx[rxn]);
-    rx[rxn] = 0;
-    rxn = (rxn-1) % MAXBUFFERSIZE;
+    CheckPWM(PWM8,PWM16);
+    PWM8++;
+    PWM16++;
   }
 }
+
+

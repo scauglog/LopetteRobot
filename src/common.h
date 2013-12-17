@@ -32,8 +32,6 @@ extern uint8_t PORTD;
 
 #define MAXBUFFERSIZE 50
 #define PINSNUMBER 16
-extern char rx[MAXBUFFERSIZE];
-extern int rxn;
 
 struct Pin{ 
 	uint8_t type;
@@ -43,6 +41,8 @@ struct Pin{
 };
 
 extern struct Pin pins[PINSNUMBER]; 
+extern char rx[MAXBUFFERSIZE];
+extern int rxn;
 
 #endif
 

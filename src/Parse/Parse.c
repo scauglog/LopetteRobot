@@ -36,8 +36,8 @@ void parse(void){
   case 0b00110000:
     //if (isMask == 0b00000001) //read a mask
       //read(type,1,size, );
-    //else              
-	//read();         //read a pin
+      //else              
+    //read();         //read a pin
     write('r');
     break;
   case 0b01000000:

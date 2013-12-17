@@ -26,14 +26,10 @@ extern uint8_t PORTB;
 extern uint8_t PORTD;
 #endif
 
-#include "Commande/Commande.h"
-#include "Parse/Parse.h"
-#include "BindingAVR/BindingAVR.h"
-
 #define MAXBUFFERSIZE 50
 #define PINSNUMBER 16
 
-struct Pin{ 
+struct Pin{
 	uint8_t type;
 	uint16_t value;
 	char port;
@@ -44,6 +40,10 @@ extern struct Pin pins[PINSNUMBER];
 extern char rx[MAXBUFFERSIZE];
 extern int rxn;
 
+#include "Commande/Commande.h"
+#include "BindingAVR/BindingAVR.h"
+#include "Parse/Parse.h"
+
 #endif
 
-struct Pin;
+

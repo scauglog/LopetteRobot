@@ -29,15 +29,15 @@ void initiateParse(void){
     int size = (rx[1] << 8) | (rx[2] << 0);
     if(rxn == size+4){
       parse();
-      //int i = 0;
-      //for(; i < size+4; i++) //DEBUG
-      //x[i] = 0;
+      int i = 0;
+      for(; i < size+4+1; i++) //DEBUG
+        rx[i] = 0x00;
       rxn = 0;
     }
     else{
       int i = 0;
       for(;i<size+4;i++)
-	writeSerial(rx[i]);
+		writeSerial(rx[i]);
       writeSerial('\n');
     }
   }
@@ -105,6 +105,7 @@ int main(void){
   SetPin(0,true);
   SetPin(8,true);
   SetPin(0,false);
+  
   while(true){
     CheckPWM(PWM8,PWM16);
     PWM8++;

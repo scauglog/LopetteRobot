@@ -1,16 +1,5 @@
 #include "BindingAVR.h"
 
-void setPortB(char values){
-#ifdef ARDUINO
-  DDRB = values;
-#else
-  int i =0;
-  for(;i < 8; i++)
-    if(DDRB & (1 << i))
-      fprintf(stdout, "ACTIVATE PIN %d\n", i);
-#endif
-}
-
 void SetPortD(char values){
 	DDRD = values;
 #ifndef ARDUINO
@@ -20,7 +9,16 @@ void SetPortD(char values){
 			fprintf(stdout, "ACTIVATE PIN %d\n", i);
 #endif
 }
-
+void SetPortB(char values){
+#ifdef ARDUINO
+  DDRB = values;
+#else
+  int i =0;
+  for(;i < 8; i++)
+    if(DDRB & (1 << i))
+      fprintf(stdout, "ACTIVATE PIN %d\n", i);
+#endif
+}
 void SetPin(uint16_t pinNumber, bool value){
 	if(pins[pinNumber].port == 'B'){
 		if(value)

@@ -35,9 +35,7 @@ int GetCaps(void){
 
 int Reset(void){
   int i;
-  for(i=0; i<PINSNUMBER;i++){
-    SetPin(i,false);
-  }
+  InitPins();
 
   wx[0] = 0x10;
   wx[1] = 0x00;

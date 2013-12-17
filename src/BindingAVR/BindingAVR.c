@@ -1,5 +1,5 @@
 #include "BindingAVR.h"
-void SetPort(char port, char values){
+bool SetPort(char port, char values){
   switch(port){
   case 'B':
     DDRB = values;
@@ -10,13 +10,16 @@ void SetPort(char port, char values){
   case 'D':
     DDRD = values;
     break;
+  default:
+    return false;
   }
 #ifndef ARDUINO
   PrintDDR();
 #endif
+  return true;
 }
 
-void SetPin(uint8_t pinNumber, bool value){
+bool SetPin(uint8_t pinNumber, bool value){
   switch(pins[pinNumber].port){
   case 'B':
     if(value)
@@ -36,13 +39,16 @@ void SetPin(uint8_t pinNumber, bool value){
     else
       PORTD = PORTD& ~pins[pinNumber].number;
     break;
+  default:
+  	return false;
   }
 #ifndef ARDUINO
   PrintPort();
-#endif	
+#endif
+  return true;	
 }
 
-void InitPins(){
+bool InitPins(){
   int i=0;
   for(; i<PINSNUMBER;i++){
     if(i<8){
@@ -56,11 +62,19 @@ void InitPins(){
     }else if(16<=i && i<24){
       pins[i].port='C';
       pins[i].number=(1 << (i-16));
+    }else{
+      return false;
     }
+    pins[i].type=0;
+    pins[i].value=0;
 #ifndef ARDUINO
     PrintPins(i);
 #endif
   }
+  PORTB=(0b00000000);
+  PORTC=(0b00000000);
+  PORTD=(0b00000000);
+  return true;
 }
 
 void CheckPWM(uint8_t pwm8, uint16_t pwm16){

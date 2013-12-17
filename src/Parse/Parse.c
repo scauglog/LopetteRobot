@@ -22,8 +22,7 @@ void parse(void){
     GetCaps();
     break;
   case 0x10:
-    //reset();
-    writeSerial(2);
+    Reset();
     break;
   case 0x20:
     Ping();

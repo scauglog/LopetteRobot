@@ -97,26 +97,23 @@ int main(void){
   
   UCSRB = (1<<RXCIE)|(1<<RXEN)|(1<<TXEN);
   sei();//system enable interrupt
-  SetPort('B',0b11111111);
-  SetPort('C',0b11111111);
-  SetPort('D',0b11111111);
-
 #else
   Set_PC();
 #endif
-  PORTB=(0b00000000);
-  PORTC=(0b00000000);
-  PORTD=(0b00000000);
+  SetPort('B',0b11111111);
+  SetPort('C',0b11111111);
+  SetPort('D',0b11111111);
   InitPins();
   uint8_t PWM8=0;
   uint16_t PWM16=0;
 
   /* TEST UNITAIRE Commande: mettre une valeur a rx pour choisir une commande
-                             affiche le contenu du buffer wx
-  rx[0]=0x00;
+                             affiche le contenu du buffer wx  
+  int k;
+  rx[0]=0x10;
   parse();
   for(k=0;k<MAXBUFFERSIZE;k++)
-  writeSerial(wx[k]);
+  	writeSerial(wx[k]);
   */
 
   /*TEST UNITAIRE SetPIN :

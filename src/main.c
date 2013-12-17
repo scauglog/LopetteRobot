@@ -18,8 +18,11 @@ uint8_t PORTB;
 uint8_t PORTD;
 #endif
 
-char rx[MAXBUFFERSIZE] = {0};
+uint8_t rx[MAXBUFFERSIZE] = {0};
+uint8_t wx[MAXBUFFERSIZE] = {0};
 int rxn = 0;
+int wxn = 0;
+uint8_t replyId = 0;
 struct Pin pins[PINSNUMBER]; 
 
 void initiateParse(void){
@@ -102,15 +105,21 @@ int main(void){
   InitPins();
   uint8_t PWM8=0;
   uint16_t PWM16=0;
+  int k;
   SetPin(0,true);
   SetPin(8,true);
   SetPin(0,false);
-  
-  while(true){
-    CheckPWM(PWM8,PWM16);
-    PWM8++;
-    PWM16++;
+  rx[0]=0x00;
+  parse();
+  for(k=0;k<MAXBUFFERSIZE;k++){
+  writeSerial(wx[k]);
   }
+
+  /* while(true){*/
+  /*   CheckPWM(PWM8,PWM16); */
+  /*   PWM8++; */
+  /*   PWM16++; */
+  /* } */
 
   /* TEST UNITAIRE PARSE :
      rx[0]=0b00010000;

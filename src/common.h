@@ -37,8 +37,11 @@ struct Pin{
 };
 
 extern struct Pin pins[PINSNUMBER]; 
-extern char rx[MAXBUFFERSIZE];
+extern uint8_t rx[MAXBUFFERSIZE];
 extern int rxn;
+extern uint8_t wx[MAXBUFFERSIZE];
+extern int wxn;
+extern uint8_t replyId;
 
 #include "Commande/Commande.h"
 #include "BindingAVR/BindingAVR.h"

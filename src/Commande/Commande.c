@@ -6,19 +6,66 @@
  *@param maxSupported minimal version supported by the Raspberry
  *@return version in which Raspberry and Arduino will communicate
  **/
-char getProtocolVersion(char minSupported, char maxSupported){
-  // FIXME
-  return maxSupported;
-}
 
 /**
  *@param type of reset (see definition in PROTOCOLE)
  *@return ok (see definition in PROTOCOLE)
  **/
-char reset(char type){
-  return 'a';
+int GetCaps(void){
+  int i;
+  uint8_t tmp = PINSNUMBER;
+
+  wx[0] = 0x00;
+  wx[1] = 0x00;
+  wx[3] = replyId;
+  wx[4] = tmp;
+  for(i=0;i<PINSNUMBER;i++){
+    wx[i+5] = pins[i].type;
+  }
+  i = i+6;
+  wx[i] = 0x00; 
+
+  replyId++;
+  if(replyId == 0)
+    replyId = 16;
+  tmp = i;
+  wx[2] = tmp;
+  return true;
 }
 
+int Reset(void){
+  int i;
+  for(i=0; i<PINSNUMBER;i++){
+    SetPin(i,false);
+  }
+
+  wx[0] = 0x10;
+  wx[1] = 0x00;
+  wx[2] = 0x05;
+  wx[3] = replyId;
+  wx[4] = 0x00;
+  
+  replyId++;
+  if(replyId == 0)
+    replyId = 16; 
+  return true;
+}
+
+int Ping(void){
+  
+  uint8_t vers = 0x01;
+  wx[0] = 0x30;
+  wx[1] = 0x00;
+  wx[2] = 0x06;
+  wx[3] = replyId;
+  wx[4] = vers;
+  wx[5] = 0x00;
+  
+  replyId++;
+  if(replyId == 0)
+    replyId = 16;
+  return true;
+}
 /* /\** */
 /*  *@param states state of each pin (ex: first char -> 1-to-4 pin state) to set in safe mode */
 /*  *@param values set of default values for each pin */

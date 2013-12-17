@@ -19,6 +19,15 @@ void SetPortB(char values){
       fprintf(stdout, "ACTIVATE PIN %d\n", i);
 #endif
 }
+
+/* void GetPin(uint16_t pinNumber){ */
+  
+/*   if(pins[pinNumber].port == 'B'){ */
+/*     if(value) */
+      
+/*   } */
+/* } */
+
 void SetPin(uint16_t pinNumber, bool value){
 	if(pins[pinNumber].port == 'B'){
 		if(value)

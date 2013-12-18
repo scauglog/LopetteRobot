@@ -43,7 +43,7 @@ void parse(void){
     writeSerial('g');
     break;
   case 0x60:
-    //setType();
+    SetType();
     writeSerial('s');
     break;
   case 0x70:

@@ -38,9 +38,7 @@ void parse(void){
     writeSerial('w');
     break;
   case 0x50:
-    //if(mask == 0b00000001)
-    //getType();
-    writeSerial('g');
+    GetType();
     break;
   case 0x60:
     SetType();

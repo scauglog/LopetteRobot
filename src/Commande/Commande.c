@@ -34,7 +34,6 @@ int GetCaps(void){
 }
 
 int Reset(void){
-  int i;
   InitPins();
 
   wx[0] = 0x10;
@@ -66,11 +65,32 @@ int Ping(void){
 }
 
 int SetType(void){
-	
 	if(rx[0]&0b00000001){
-		SetPinType(rx[3],rx[4]);
+		int i=0;
+		int npa=0;
+		for(;i<PINSNUMBER;i++)
+		{
+			if(rx[3+i/8]&(1<<(7-(i%8)))){
+				uint8_t val1=rx[3+(PINSNUMBER+npa*3)/8]&(0b10000000>>((PINSNUMBER+3*npa)%8));
+				uint8_t val2=rx[3+(PINSNUMBER+npa*3+1)/8]&(0b10000000>>((PINSNUMBER+3*npa+1)%8));
+				uint8_t val3=rx[3+(PINSNUMBER+npa*3+2)/8]&(0b10000000>>((PINSNUMBER+3*npa+2)%8));
+				
+				uint8_t val=(val1<<2)|(val2<<1)|(val3<<0);
+				val=0;
+				if(val1!=0)
+					val=val|1<<2;
+				
+				if(val2!=0)
+					val=val|1<<1;
+				
+				if(val3!=0)
+					val=val|1<<0;
+				SetPinType(i,val);	
+				npa++;
+			}
+		}
 	}else{
-		//todo
+		SetPinType(rx[3],rx[4]);
 	}
 	return 0;
 }

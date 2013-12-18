@@ -115,7 +115,19 @@ int main(void){
   for(k=0;k<MAXBUFFERSIZE;k++)
   	writeSerial(wx[k]);
   */
+  
+  /* TEST UNITAIRE Commande Set type: 
 
+  rx[0]=0x61;
+  rx[1]=0x04;
+  rx[2]=0x00;
+  rx[3]=0b10100000;
+  rx[4]=0x00;
+  rx[5]=0b00000011;//last pin and first bit mask type1=100 type2=001 type3=010
+  rx[6]=0b00001010;
+  parse();
+  */
+  
   /*TEST UNITAIRE SetPIN State :
   SetPinState(2,true);
   SetPinState(2,false);
@@ -129,7 +141,7 @@ int main(void){
   SetPinState(20,false);
   */
   while(true){
-    CheckPWM(PWM8,PWM16);
+    //CheckPWM(PWM8,PWM16);
     PWM8++;
     PWM16++;
   }

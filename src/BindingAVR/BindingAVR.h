@@ -10,14 +10,15 @@
 
 #include "../common.h"
 bool SetPort(char port,char values);
-bool SetPin(uint8_t pinNumber, bool value);
+bool SetPinState(uint8_t pinNumber, bool value);
+bool SetPinType(uint8_t pinNumber, uint8_t type);
 bool InitPins(void);
 void CheckPWM(uint8_t pwm8, uint16_t pwm16);
 
 #ifndef ARDUINO
 void PrintPins(uint8_t pin);
-void PrintDDR();
-void PrintPort();
+void PrintDDR(void);
+void PrintPort(void);
 #endif
 
 #endif

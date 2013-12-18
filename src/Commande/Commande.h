@@ -10,15 +10,15 @@
 // Arduino Receptionning commands
 
 //char getProtocolVersion(char minSupported, char maxSupported);
-int GetCaps();
-int Reset();
-int Ping();
+int GetCaps(void);
+int Reset(void);
+int Ping(void);
 /* int getState(); */
 /* int setState(); */
 /* int read(); */
 /* int write(); */
 /* int getType(); */
-/* int setType(); */
+int SetType(void);
 /* int getFailSafe(); */
 /* int setFailSafe(); */
 

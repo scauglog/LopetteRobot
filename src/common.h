@@ -36,6 +36,7 @@ struct Pin{
 	uint16_t value;
 	char port;
 	uint8_t number;
+	uint8_t state;
 };
 
 extern struct Pin pins[PINSNUMBER]; 

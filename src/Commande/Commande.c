@@ -64,6 +64,16 @@ int Ping(void){
     replyId = 16;
   return true;
 }
+
+int SetType(void){
+	
+	if(rx[0]&0b00000001){
+		SetPinType(rx[3],rx[4]);
+	}else{
+		//todo
+	}
+	return 0;
+}
 /* /\** */
 /*  *@param states state of each pin (ex: first char -> 1-to-4 pin state) to set in safe mode */
 /*  *@param values set of default values for each pin */

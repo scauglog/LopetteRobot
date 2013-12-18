@@ -116,17 +116,17 @@ int main(void){
   	writeSerial(wx[k]);
   */
 
-  /*TEST UNITAIRE SetPIN :
-  SetPin(2,true);
-  SetPin(2,false);
-  SetPin(12,true);
-  SetPin(12,false);
-  SetPin(22,true);
-  SetPin(22,false);
-  SetPin(21,true);
-  SetPin(20,true);
-  SetPin(19,true);
-  SetPin(20,false);
+  /*TEST UNITAIRE SetPIN State :
+  SetPinState(2,true);
+  SetPinState(2,false);
+  SetPinState(12,true);
+  SetPinState(12,false);
+  SetPinState(22,true);
+  SetPinState(22,false);
+  SetPinState(21,true);
+  SetPinState(20,true);
+  SetPinState(19,true);
+  SetPinState(20,false);
   */
   while(true){
     CheckPWM(PWM8,PWM16);

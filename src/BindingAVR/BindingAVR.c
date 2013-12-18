@@ -19,7 +19,7 @@ bool SetPort(char port, char values){
   return true;
 }
 
-bool SetPin(uint8_t pinNumber, bool value){
+bool SetPinState(uint8_t pinNumber, bool value){
   switch(pins[pinNumber].port){
   case 'B':
     if(value)
@@ -47,8 +47,23 @@ bool SetPin(uint8_t pinNumber, bool value){
 #endif
   return true;	
 }
+bool SetPinType(uint8_t pinNumber, uint8_t type){
+	pins[pinNumber].type=type;
+#ifndef ARDUINO
+    PrintPins(pinNumber);
+#endif
+	return true;
+}
 
-bool InitPins(){
+bool SetPinValue(uint8_t pinNumber, uint16_t value){
+	pins[pinNumber].value=value;
+#ifndef ARDUINO
+    PrintPins(pinNumber);
+#endif
+	return true;
+}
+
+bool InitPins(void){
   int i=0;
   for(; i<PINSNUMBER;i++){
     if(i<8){
@@ -67,6 +82,7 @@ bool InitPins(){
     }
     pins[i].type=0;
     pins[i].value=0;
+    pins[i].state=0;
 #ifndef ARDUINO
     PrintPins(i);
 #endif
@@ -80,26 +96,32 @@ bool InitPins(){
 void CheckPWM(uint8_t pwm8, uint16_t pwm16){
   int i=0;
   for(; i<PINSNUMBER;i++){
+    if(pins[i].type==1&&(pins[i].state!=pins[i].value)){
+    	pins[i].state=pins[i].value;
+    	SetPinState(i,pins[i].state);
+    }
+    
     if(pins[i].type==3){//pwm8
       if(pwm8==0)
-      	SetPin(i,true);
+      	SetPinState(i,true);
       if(pwm8==pins[i].value)
-      	SetPin(i,false);
+      	SetPinState(i,false);
     }
       	
     if(pins[i].type==4){//pwm16
       if(pwm16==0)
-      	SetPin(i,true);
+      	SetPinState(i,true);
       if(pwm16==pins[i].value)
-      	SetPin(i,false);
+      	SetPinState(i,false);
     }
+    
   }
 }
 
 
 #ifndef ARDUINO
 void PrintPins(uint8_t pin){
-  fprintf(stdout,"pin %d | type=%d | value=%d | port=%c | number=",pin,pins[pin].type,pins[pin].value,pins[pin].port);
+  fprintf(stdout,"pin %d | state=%d | type=%d | value=%d | port=%c | number=",pin,pins[pin].state,pins[pin].type,pins[pin].value,pins[pin].port);
   int i=0;
   for(;i < 8; i++)
     if(pins[pin].number& (1 << i))
@@ -109,7 +131,7 @@ void PrintPins(uint8_t pin){
   fprintf(stdout, "\n");	
 }
 
-void PrintDDR(){
+void PrintDDR(void){
   fprintf(stdout, "DDRD= ");
   int i = 0;
   for(;i < 8; i++)
@@ -136,7 +158,7 @@ void PrintDDR(){
   fprintf(stdout, "\n");
 }
 
-void PrintPort(){
+void PrintPort(void){
   fprintf(stdout, "PORTD= ");
   int i = 0;
   for(;i < 8; i++)

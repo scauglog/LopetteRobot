@@ -65,14 +65,48 @@ int Ping(void){
   return true;
 }
 
+
+
+int write(void){
+  uint8_t type = 0b00001110 & rx[0]; 
+  int i;
+  if(rx[0] == 0%2){
+    SetPinType(rx[3],type);
+    SetPinValue(rx[3],rx[4]);
+  }
+  else{
+	  
+
+    }
+  }
+  
+  
+  wx[0] = 0x40;
+  wx[1] = 0x00;
+  wx[2] = 0x05;
+  wx[3] = replyId;
+  wx[4] = 0x00;
+  
+  replyId++;
+  if(replyId == 0)
+    replyId = 16;
+  return true;
+}
+
 int SetType(void){
 	
-	if(rx[0]&0b00000001){
-		SetPinType(rx[3],rx[4]);
-	}else{
-		//todo
-	}
-	return 0;
+  if(rx[0]&0b00000001){
+    SetPinType(rx[3],rx[4]);
+  }else{
+    //todo
+  }
+  return 0;
+}
+
+int GetFailSafe(void){
+  if(rx[0] == 0%2){
+    get
+  }else{
 }
 /* /\** */
 /*  *@param states state of each pin (ex: first char -> 1-to-4 pin state) to set in safe mode */

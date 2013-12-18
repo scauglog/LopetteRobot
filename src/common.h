@@ -32,11 +32,12 @@ extern uint8_t PORTD;
 #define PINSNUMBER 23
 
 struct Pin{
-	uint8_t type;
-	uint16_t value;
-	char port;
-	uint8_t number;
-	uint8_t state;
+  uint8_t type;
+  uint16_t value;
+  char port;
+  uint8_t number;
+  uint8_t state;
+  uint16_t timeOut;
 };
 
 extern struct Pin pins[PINSNUMBER]; 

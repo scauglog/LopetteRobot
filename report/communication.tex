@@ -1,13 +1,6 @@
 Dans cette partie nous allons décrire notre approche vis-à-vis de la 
 communication série via l'UART.
 
-%\paragraph{Baud rate :}
-%Nous utilisons un baud rate fixé à 115200, ce qui a posé problème au
-%début car la formules fournies par la documentation nous donnait une
-%valeur fausse (le machine nous renvoyant la partie entière du
-%résultat, alors que le micro processeur attendait la valeur arrondie
-%pour ce baudrate la).
-
 \subsection{Bufferisation}
 Décrivons ce qu'il se passe lors de la réception d'un octet par l'Atmega8. 
 Dans un premier temps, une interruption est levé (USART\_RXC\_vect). Nous 
@@ -27,10 +20,32 @@ Header&+&Size&+&Mask&+&Values&+&Checksum& &\\
 $$
 ~\\
 
+Dans une première phase de test, ce buffer était lu dans la boucle principal
+du main et une réponse était élaborer selon la lettre. Nous allumions une
+LED en appuyant sur une touche et l'éteignant en appuyant sur une autre.
+Ce comportement à néanmoins changé lorsque nous avons voulu faire à la fois
+de PWM logicielle en même temps que la communication sur l'UART.
+Cette PWM logicielle a été implémenté est nécessitait un thread pour opérer.
+Nous avons alors pensé en créer un de plus avec des bibliothèques de thread
+mais en plus de perdre beaucoup d'espace mémoire, nous perdions surtout
+l'aspect temps réel de la communication; ce que nous tenons à conserver.
+Après quelques essais de ces threads, nous avons donc choisi d'attaquer le
+problème autrement. Nous utilisons alors l'interruption pour lancer le parse
+de la commande et son éxécution.\\
 
+Cette solution a tout d'abord été émulée avant d'être envoyé sur la carte 
+Arduino.
 
 \subsection{Émulation}
-Pour émuler les interruptions du processeur nous avons choisi dans un
-premier temps d'utiliser la bibliothèque de thread standart.
+Pour émuler les interruptions du processeur nous avons choisi d'utiliser 
+la bibliothèque de thread standart. Le code faisant la bufferisation
+des caractères à alors été factorisée dans la fonction 
+\textit{initiateParse} du \textit{main.c}.\\
 
-\subsection{}
+
+%\paragraph{Baud rate :}
+%Nous utilisons un baud rate fixé à 115200, ce qui a posé problème au
+%début car la formules fournies par la documentation nous donnait une
+%valeur fausse (le machine nous renvoyant la partie entière du
+%résultat, alors que le micro processeur attendait la valeur arrondie
+%pour ce baudrate la).

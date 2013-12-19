@@ -135,7 +135,7 @@ int GetFailSafe(void){
 		SetPinType(rx[3],rx[4]);
 	}
 	wx[0]=0x70;
-	wxn=3;
+	wxn=3
 	// Load upper 8-bits 
 	uint8_t hi = (unsigned char)((wxn) >> 8);
 	// Load lower 8-bits 

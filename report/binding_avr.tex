@@ -1,1 +1,22 @@
-blabalbal
+\paragraph{}
+Pour pouvoir programmer sans utiliser la arduino, nous avons rapidement implémenter des fonctions qui réalisent les opérations basique sur l'arduino et nous avons défini leur fonction équivalente pour PC, généralement l'affichage d'un message en console. Nous avons aussi défini des variable avec le même nom que les registres de l'Atmega8 lorsque l'on compile sur pc, ainsi en compilant sur pc on peut accéder au vleur qu'auront ces registre sur l'atmega.
+Dans un premier temps nous avons implémenter les commande de communication avec l'arduino Read et Write serial. Puis nous avons implementé les commandes pour régler les ports, changer l'état d'une pin, initialiser la structure pin.
+
+\paragraph{}
+Pour controler les pin de la carte il faut modifier les valeurs de différent registre.
+\begin{description}
+\item[DDRx :] ce registre permet de contrôler le mode du pin si un des bit est à 1 alors le pin correspondant est en mode output si il est à 0 le pin est en mode input. Pour le processeur atmega8 x vaut B, C ou D suivant le port utilisé. Par exemple DDRD=0b10000000, met le premiers pin du port D en mode output.
+\item[PORTx :] ce registre permet de contrôler l'état du pin si le pin est en output et que le bit correspondant est à 1 alors le pin est actif (émet du courrant). Par exemple si DDRD=0b10000000 et PORTD=0b10000000 alors le pin 1 du port D est à l'état 1.
+\end{description}
+
+\paragraph{}
+Nous avons créé une structure pin qui nous sert à sotcker toute les informations concernant la pin et son état. C'est dans cette strcture qu'est sotcké le type de pin (analog, digital, boolean), sa valeur, son état, sa position sur le port et son port. Les commandes du protocole ne modifie pas directement la valeur du registre Atmega associé à la pin mais modifie l'attribut correspondant dans la structure. Dans le main, il y a une boucle infini qui appelle la fonction CheckPWM, c'est cette fonction qui s'occupe de modifier le registre en fonction de ce qui est renseigné dans la structure Pin, si la Pin est en PWM la fonction change l'état du pin lorsque la valeur du PWM renseigné est atteinte, si la pin est type bool la fonction modifie l'état de la pin seulement si sont état actuel est différent del a valeur renseigné dans la structure. Ainsi la Pin n'est pas modifié lors de la réception de la commande mais lors de la prochaine exécution de CheckPWM.
+
+\paragraph{}
+La fonction InitPins initialise la structure, elle sert à déterminer quels pin est affecté a quel port et quel est la valeur binaire du pin sur la port (par exemple Pin 2 = 0b01000000 sur le port D) cette valeur est stocké dans l'attribut "number". Si la correspondance Pin, port ne convient pas à l'utilisateur il suffit de changer cette fonction. Lors de l'initialisation les pins sont ont pour type bool, valeur zéro et état zéro.
+
+\paragraph{}
+La commande SetPinState permet de basculer l'état d'une pin. La fonction utilise l'attribut number de la structure pin et des opérateur bit à bit pour changer l'état de la pin sur le bon registre PORT.
+
+\paragraph{}
+Les commandes SetPinType et SetPinValeur se contente simplement de changer les attribut correspondant dans la structure pin. Si la compilation se fait en mode PC, l'application affiche toute les information concernant la pin.

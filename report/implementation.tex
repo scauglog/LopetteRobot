@@ -1,3 +1,10 @@
+\paragraph{Optimisation du code}
+toujours dans le but d'obtenir un binaire aussi petit que possible,
+nous avons utilisés des entiers codés sur 16 et 8 bits en
+priorité. nous avons éviter d'utiliser les fonctions mallocs et
+free. Nous avons utiliser des commandes préprocesseurs ne compiler 
+le code que pour l'architecture 
+
 \paragraph{Parsing} 
 
 Le système parse le buffer RX lorsque la différence entre le nombre
@@ -11,4 +18,4 @@ elle d'aller lire les octets qui l'interesse dans le buffer RX.
 \item[Ping :] Cette fonction renvoie le version du protocol installée sur la Arduino. Celle-ci est écrite en dur dans le code.
 \item[SetType :] Cette fonction parcours le masque de la trame contenu dans RX et met à jour le type des pins en fonction des valeurs lues.
 \item[GetType :] Cette fonction écris dans WX les types des pins demandé en parcourant le tableau de pin.
-\end{descrition}
+\end{description}

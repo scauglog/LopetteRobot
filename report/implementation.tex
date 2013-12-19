@@ -1,16 +1,24 @@
-\paragraph{Optimisation du code}
+\paragraph{Optimisation du code:}
 toujours dans le but d'obtenir un binaire aussi petit que possible,
 nous avons utilisés des entiers codés sur 16 et 8 bits en
 priorité. nous avons éviter d'utiliser les fonctions mallocs et
 free. Nous avons utiliser des commandes préprocesseurs ne compiler 
-le code que pour l'architecture 
+le code que pour l'architecture pour laquel il était destiné.
 
-\paragraph{Parsing} 
+\paragraph{Interruption:}
+Nous avons utilisé des interruptions pour bufferiser les caractères
+venant du port série. C'est également durant l'interruption que l'on
+lance le parsage du buffer lorsque la commande est terminé.
+
+
+\paragraph{Parsing:} 
 
 Le système parse le buffer RX lorsque la différence entre le nombre
 d'octet lu et la taille du paquet indiqué est égale à 0. le système
 lit ensuite l'octet contenant la commande désirée. Ce sera ensuite à
 elle d'aller lire les octets qui l'interesse dans le buffer RX.
+
+\paragraph{Description rapide des commandes:}
 
 \begin{description}
 \item[GetCaps :] La fonction GetCaps va lire le nombre de pin (stocké dans une variable d'environnement) puis écris la trame de la réponse dans le buffer WX.
@@ -19,3 +27,57 @@ elle d'aller lire les octets qui l'interesse dans le buffer RX.
 \item[SetType :] Cette fonction parcours le masque de la trame contenu dans RX et met à jour le type des pins en fonction des valeurs lues.
 \item[GetType :] Cette fonction écris dans WX les types des pins demandé en parcourant le tableau de pin.
 \end{description}
+
+\paragraph{Algorithme de SetType}
+voici l'algorithme recuperer un des bits du type.
+
+
+
+\begin{verbatim}
+ if(rx[3+i/8]&(1<<(7-(i%8)))){
+ uint8_t val2=rx[3+(PINSNUMBER+npa*3+1)/8]&(0b10000000>>((PINSNUMBER+3*npa+1)%8));
+ }        
+\end{verbatim}
+
+La condition permet reperer les bits concerné par la commande.
+
+\begin{itemize}
+\item $3 + (PINSNUMBER + npa*3+1)/8$ permet de recuperer le numéro de l'octet qui code 
+un bit du type de la pin.
+\item le premier trois permet de se placer au debut masque.
+\item PINSNUMBER permet de sauter le masque.
+\item npa represente le nombre de pin déjà traité.
+\item on le multiplie par trois qui correspond au codage du type.
+\item on divise par 8 pour avoir le nombre de bit.
+\end{itemize}
+
+Nous avons maintenant selectionner le bon octet, il reste a récuperer le bon bit, pour cela nous utilisons l'operateur & et un décalage vers la droite.
+le "+1" correspond au bit du type recherché.
+
+
+%% $
+%% \begin{array}{|c|c|c|c|c|c|c|c|}
+%% \hline
+%% 1&0&1&0&0&0&0&0\\
+%% \hline
+%% \end{array}
+%% ~~
+%% \begin{array}{|c|c|c|c|c|c|c|c|}
+%% \hline
+%% 0&0&0&0&0&0&0&0\\
+%% \hline
+%% \end{array}
+%% ~~
+%% \begin{array}{|c|c|c|c|c|c|c|c|}
+%% \hline
+%% 0&0&0&0&0&0&1&1\\
+%% \hline
+%% \end{array}
+%% ~~
+%% \begin{array}{|c|c|c|c|c|c|c|c|}
+%% \hline
+%% 0&0&0&0&1&0&1&0\\
+%% \hline
+%% \end{array}
+%% $
+

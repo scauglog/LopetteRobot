@@ -1,5 +1,5 @@
 Dans cette partie nous allons décrire notre approche vis-à-vis de la 
-communication série via l'UART.
+communication série via l'UART. 
 
 \subsection{Bufferisation}
 Décrivons ce qu'il se passe lors de la réception d'un octet par l'Atmega8. 
@@ -21,15 +21,15 @@ $$
 ~\\
 
 Dans une première phase de test, ce buffer était lu dans la boucle principal
-du main et une réponse était élaborer selon la lettre. Nous allumions une
+du main et une réponse était élaborer selon le premier octet. Nous allumions une
 LED en appuyant sur une touche et l'éteignant en appuyant sur une autre.
 Ce comportement à néanmoins changé lorsque nous avons voulu faire à la fois
-de PWM logicielle en même temps que la communication sur l'UART.
-Cette PWM logicielle a été implémenté est nécessitait un thread pour opérer.
-Nous avons alors pensé en créer un de plus avec des bibliothèques de thread
-mais en plus de perdre beaucoup d'espace mémoire, nous perdions surtout
+du PWM logiciel en même temps que la communication sur l'UART.
+Ce PWM logiciel a été implémenté et semblait nécessiter un thread pour opéré.
+Nous avons alors pensé en créer en plus du main avec des bibliothèques de thread.
+Mais outre la perdre inutile d'espace mémoire, nous perdions surtout
 l'aspect temps réel de la communication; ce que nous tenons à conserver.
-Après quelques essais de ces threads, nous avons donc choisi d'attaquer le
+Après quelques essais avec ces threads, nous avons donc choisi d'attaquer le
 problème autrement. Nous utilisons alors l'interruption pour lancer le parse
 de la commande et son éxécution.\\
 
@@ -39,9 +39,36 @@ Arduino.
 \subsection{Émulation}
 Pour émuler les interruptions du processeur nous avons choisi d'utiliser 
 la bibliothèque de thread standart. Le code faisant la bufferisation
-des caractères à alors été factorisée dans la fonction 
-\textit{initiateParse} du \textit{main.c}.\\
+des caractères a alors été factorisée dans la fonction
+\textit{initiateParse} du \textit{main.c}. Le PWM et la réponse à une commande
+fonctionnaient alors convenablement sur l'émulateur.\\
 
+Néanmoins, lorsque l'on a téléversé le code sur l'Atmega8, le résultat était
+différent. Après une longue phase de debug qui ne s'est jamais vraiment terminée,
+nous avons compris que le problème provenait d'un conflit temporel entre
+la réception des octets et la durée de l'interruption. Nous avons trouvé de 
+nombreuses options à passer à ces interruptions telles que: ISR\_NOBLOCK et 
+ISR\_BLOCK. Ces deux options en particulier permettent d'activer ou non les 
+interruptions lorsque cette interruption est en cours d'éxécution. Par exemple,
+avec ISR\_NOBLOCK on peut se retrouver avec une pile d'interruption assez importante
+alors que l'autre l'empêche.\\
+
+Nous nous sommes essentiellement penché sur ces deux options:
+\begin{description}
+\item[ISR\_NOBLOCK :]
+  Nous avons essayer, sans succès, de remodeler le code de sorte que la pile
+  d'interruption n'empêche pas le bon remplissage du buffer.
+\item[ISR\_BLOCK :]
+  Nous avons cherché s'il existait une file d'interruption pour pouvoir accéder
+  aux octets qui n'ont pas été traité. Cette file ne semble pas exister.
+\end{description}
+
+\subsection{Une autre solution}
+Ayant perdu trop de temps sur cet aspect, nous n'avons pas pris le temps d'essayer
+d'utiliser des ``Timer Interrupt'' (TIMER1\_OVF\_vect) pour régler le PWM.
+Cela semble être, a posteriori, la meilleure méthode car elle libère le main pour 
+la gestion des commandes car la gestion de cet interruption est peu coûteuse en terme
+de temps : mettre à 1 où 0 les bons PORTS aux moments.
 
 %\paragraph{Baud rate :}
 %Nous utilisons un baud rate fixé à 115200, ce qui a posé problème au

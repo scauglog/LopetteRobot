@@ -34,25 +34,25 @@ voici l'algorithme recuperer un des bits du type.
 
 
 \begin{verbatim}
- if(rx[3+i/8]&(1<<(7-(i%8)))){
- uint8_t val2=rx[3+(PINSNUMBER+npa*3+1)/8]&(0b10000000>>((PINSNUMBER+3*npa+1)%8));
- }        
+if(rx[3+i/8]&(1<<(7-(i%8)))){
+   uint8_t val2=rx[3+(PINSNUMBER+npa*3+1)/8]&(0b10000000>>((PINSNUMBER+3*npa+1)%8));
+}
 \end{verbatim}
 
-La condition permet reperer les bits concerné par la commande.
+La condition permet de reperer les bits concernés par la commande.
 
 \begin{itemize}
 \item $3 + (PINSNUMBER + npa*3+1)/8$ permet de recuperer le numéro de l'octet qui code 
 un bit du type de la pin.
-\item le premier trois permet de se placer au debut masque.
+\item le premier des trois permet de se placer au debut masque.
 \item PINSNUMBER permet de sauter le masque.
 \item npa represente le nombre de pin déjà traité.
 \item on le multiplie par trois qui correspond au codage du type.
 \item on divise par 8 pour avoir le nombre de bit.
 \end{itemize}
 
-Nous avons maintenant selectionner le bon octet, il reste a récuperer le bon bit, pour cela nous utilisons l'operateur & et un décalage vers la droite.
-le "+1" correspond au bit du type recherché.
+Nous avons maintenant selectionner le bon octet, il reste a récuperer le bon bit, pour cela nous utilisons l'operateur \& et un décalage vers la droite.
+le ``+1'' correspond au bit du type recherché.
 
 
 %% $

@@ -41,7 +41,7 @@
 
 %%%%%%%%%%%%%%%% Variables %%%%%%%%%%%%%%%%
 \def\projet{Système Embarqué}
-\def\titre{Implementation d'un protocole pour la communication  avec un Atmega8}
+\def\titre{Implémentation d'un protocole de communication série pour Atmega8}
 \def\others{Christian LASSERRE\\Louis LE CLEC'H\\ Romain SAGEAN}
 
 
@@ -62,13 +62,12 @@
     \end{tabular}}
     \vskip 4mm ~
 
-    ~~~\parbox{0.95\textwidth}{\small \textit{Résumé~:} \sffamily Le
-      but de ce projet était d'optimiser la latence de la
-      communication entre la Raspberry Pi et la Arduino en réecrivant
-      le le firmware. Nous devions donc implementer un nouveu
-      protocole, et mesurer les differences avec le firmware
-      d'origine. Ce rapport\dots conte une toute autre histoire\dots}
-      
+    ~~~\parbox{0.95\textwidth}{\small \textit{Résumé~:} \sffamily Ce projet
+      prolonge le développement d'un petit robot basé sur une carte Atmega8
+      compatible Arduino et sur une Raspberry Pi. Il vise à réduire la 
+      latence de la communication entre les deux cartes en réecrivant les 
+      firmware et driver. Nous utilisons pour cela un protocole commun à 
+      plusieurs groupe.}
     \vskip 1mm ~
 \end{minipage}
 
@@ -81,7 +80,7 @@
 \input{structure}
 
 
-\section{Communication avec la Arduino}
+\section{Communication avec l'Arduino}
 \input{communication}
 
 

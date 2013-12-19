@@ -8,7 +8,7 @@ La structure du projet a été pensée pour pouvoir compiler un même code C
 (ou presque) pour le Firmware et l'Émulateur. On retrouve ce code dans le
 dossier src à la racine du projet. Pour construire les binaires nous avons 
 un dossier build dans lequel nous avons mis un script qui permet de 
-``téléverser''\footnote{dixit Arduino} semi-automatiquement. Nous avons
+téléverser semi-automatiquement. Nous avons
 compris la nécessité d'un tel script après avoir rapidement écrasé le bootloader
 de la carte pour éviter de lancer avrdude en ayant oublié d'allégé le binaire
 avec avr-objcopy. Une amélioration de ce script aurait été de testé la taille 
@@ -18,7 +18,7 @@ cette limite.\\
 Le Driver n'a pas été implémenté. Seul un client, codé à partir d'une bibliothèque
 fourni lors d'un TP précédent à été utilisé pour envoyer des requêtes précises.
 Son utilité est à relativiser car nous utilisions surtout du shell :\\
-\$echo '\backslash x01\backslash x00\backslash x03abc\backslash x44' | ./bin/LopetteRobot\\
+\$echo '\textbackslash x01\textbackslash x00\textbackslash x03abc\textbackslash x44' | ./bin/LopetteRobot\\
 
 \subsection{Organisation des sources}
 Les sources sont découpées en plusieurs modules autour du \textit{main.c}. Notre
@@ -56,10 +56,10 @@ choisie.\\
 
 
 \subsection{Compilation}
-Comme expliqué dans le \texti{readme.md} à la racine du projet, un flag de compilation doit
+Comme expliqué dans le \textit{readme.md} à la racine du projet, un flag de compilation doit
 être donné à cmake. Depuis le répertoire build, utilisez l'option mode pour définir le type
-de compilation:\\
-cmake .. -DMODE=ARDUINO && make\\
+de compilation:
+\begin{center} cmake .. -DMODE=ARDUINO \&\& make\end{center}
 
-Toute autre valeur compilera pour PC:\\
-cmake .. -DMODE=PC && make\\
+Toute autre valeur compilera pour PC:
+\begin{center} cmake .. -DMODE=PC \&\& make\end{center}

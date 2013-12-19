@@ -2,7 +2,64 @@
 Dans ce rapport, nous désignons par Firmware l'application côté Arduino. 
 Le Driver est l'application côté Raspberry, aussi appelé client. Et l'Émulateur
 est une application compilée pour PC afin de simuler le comportement de
-l'Arduino.
+l'Arduino.\\
 
 La structure du projet a été pensée pour pouvoir compiler un même code C
-(ou presque) pour le Firmware et l'Émulateur.
+(ou presque) pour le Firmware et l'Émulateur. On retrouve ce code dans le
+dossier src à la racine du projet. Pour construire les binaires nous avons 
+un dossier build dans lequel nous avons mis un script qui permet de 
+téléverser semi-automatiquement. Nous avons
+compris la nécessité d'un tel script après avoir rapidement écrasé le bootloader
+de la carte pour éviter de lancer avrdude en ayant oublié d'allégé le binaire
+avec avr-objcopy. Une amélioration de ce script aurait été de testé la taille 
+du binaire avant de l'envoyer sur la carte. Mais nous n'avons pas approché
+cette limite.\\
+
+Le Driver n'a pas été implémenté. Seul un client, codé à partir d'une bibliothèque
+fourni lors d'un TP précédent à été utilisé pour envoyer des requêtes précises.
+Son utilité est à relativiser car nous utilisions surtout du shell :\\
+\$echo '\textbackslash x01\textbackslash x00\textbackslash x03abc\textbackslash x44' | ./bin/LopetteRobot\\
+
+\subsection{Organisation des sources}
+Les sources sont découpées en plusieurs modules autour du \textit{main.c}. Notre
+objectif a été de séparé les commandes systèmes propre à avr du traitement des commandes
+et de la communication. Nous avons donc créé 3 modules dans ce sens :
+\begin{itemize}
+\item Parse 
+  { 
+    \it 
+    Lancé dans la boucle général du Firmware, son rôle est de lancer
+    les commandes avr appropriées en fonction de la commande texte reçue. Son rôle s'étend 
+    donc à décomposer le flux de bits reçu en plusieurs char qui seront envoyé en tant 
+    qu'option pour les commandes. Elle devrait aussi contrôler la cohérence du flux entrant
+    en vérifiant par exemple sa checksum.
+  }
+\item BindingAVR
+  {
+    \it
+    Interface entre l'aspect purement logiciel du projet et les appels systèmes. Ainsi,
+    chaque fonction qu'il contient fournira une version différente selon les options de 
+    compilation. Un exemple typiquement est l'écriture sur l'UART qui est traduit par un 
+    simple fprintf sur la sortie standard.
+  }
+\item Commande
+  {
+    \it
+    Liste l'ensemble des fonctions du protocole qui pourront être appelées depuis le fichier 
+    Parse. Il devra alors utiliser les fonctions fournies par l'interface BindingAVR.
+  }
+\end{itemize}
+
+Un \textit{common.h} a de plus été ajouté à cette hiérarchie afin factorisation l'inclusion des
+différents modules et la déclaration de variables globales selon la type de compilation
+choisie.\\
+
+
+\subsection{Compilation}
+Comme expliqué dans le \textit{readme.md} à la racine du projet, un flag de compilation doit
+être donné à cmake. Depuis le répertoire build, utilisez l'option mode pour définir le type
+de compilation:
+\begin{center} cmake .. -DMODE=ARDUINO \&\& make\end{center}
+
+Toute autre valeur compilera pour PC:
+\begin{center} cmake .. -DMODE=PC \&\& make\end{center}

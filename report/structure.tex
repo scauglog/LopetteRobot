@@ -27,8 +27,8 @@ et de la communication. Nous avons donc créé 3 modules dans ce sens :
 \begin{itemize}
 \item Parse 
   { 
-    \textit 
-    Lancé dans la boucle général de la carte, son rôle est de lancer
+    \it 
+    Lancé dans la boucle général du Firmware, son rôle est de lancer
     les commandes avr appropriées en fonction de la commande texte reçue. Son rôle s'étend 
     donc à décomposer le flux de bits reçu en plusieurs char qui seront envoyé en tant 
     qu'option pour les commandes. Elle devrait aussi contrôler la cohérence du flux entrant
@@ -36,7 +36,7 @@ et de la communication. Nous avons donc créé 3 modules dans ce sens :
   }
 \item BindingAVR
   {
-    \textit
+    \it
     Interface entre l'aspect purement logiciel du projet et les appels systèmes. Ainsi,
     chaque fonction qu'il contient fournira une version différente selon les options de 
     compilation. Un exemple typiquement est l'écriture sur l'UART qui est traduit par un 
@@ -44,7 +44,7 @@ et de la communication. Nous avons donc créé 3 modules dans ce sens :
   }
 \item Commande
   {
-    \textit
+    \it
     Liste l'ensemble des fonctions du protocole qui pourront être appelées depuis le fichier 
     Parse. Il devra alors utiliser les fonctions fournies par l'interface BindingAVR.
   }

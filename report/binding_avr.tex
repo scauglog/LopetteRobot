@@ -20,3 +20,6 @@ La commande SetPinState permet de basculer l'état d'une pin. La fonction utilis
 
 \paragraph{}
 Les commandes SetPinType et SetPinValeur se contente simplement de changer les attribut correspondant dans la structure pin. Si la compilation se fait en mode PC, l'application affiche toute les information concernant la pin.
+
+\paragraph{}
+La fonction checkPWM permet de générer logiciellement des PWM, cependant ces PWM ne sont pas exact si une interruption survient la cycle de pwm durera plus longtemps. Il était prévu d'utiliser les "timer counter" disponible dans le processeur, la commande devait lire la valeur du registre et si cette valeur était supérieur ou égale à une des valeurs stocké dans la structure pin alors la pin change d'état. Cette version permet d'être moins sensible au interruption en effet le compteur est indépendant du processeur il est incrémenté même si une interruption survient. Même si dans cette les interruption peuvent toujours perturber la PWM, il est moins sensible que celui implémenter en effet dans ce cas le PWM est perturber seulement si l'interruption arrive lorsque la compteur est proche de la valeur souhaiter de PWM. 

@@ -1,12 +1,36 @@
-\paragraph{Baud rate :}
-Nous utilisons un baud rate fixé à 115200, ce qui a posé problème au
-début car la formules fournies par la documentation nous donnait une
-valeur fausse (le machine nous renvoyant la partie entière du
-résultat, alors que le micro processeur attendait la valeur arrondie
-pour ce baudrate la).
+Dans cette partie nous allons décrire notre approche vis-à-vis de la 
+communication série via l'UART.
+
+%\paragraph{Baud rate :}
+%Nous utilisons un baud rate fixé à 115200, ce qui a posé problème au
+%début car la formules fournies par la documentation nous donnait une
+%valeur fausse (le machine nous renvoyant la partie entière du
+%résultat, alors que le micro processeur attendait la valeur arrondie
+%pour ce baudrate la).
 
 \subsection{Bufferisation}
+Décrivons ce qu'il se passe lors de la réception d'un octet par l'Atmega8. 
+Dans un premier temps, une interruption est levé (USART\_RXC\_vect). Nous 
+utilisons alors une commande préprocesseur \textit{ISR}, fournie par avr, 
+pour redéfinir le comportement de la carte lors de la-dite interruption.
+Nous récupérons alors l'octet reçu et le stockons dans un buffer circulaire
+de taille prédéfinie. Cette taille a été choisie de sorte qu'elle puisse 
+accepter n'importe quelle commande pour notre carte. Ayant un nombre limité
+de pin sur notre carte, nous limitons ainsi la taille des données. En 
+effet, la commande la plus longue est l'écriture de PWM16 sur l'ensemble
+des pins. La taille totale de la trame est alors (en octet) : \\
+$$
+\begin{array}{ccccccccccc}
+1     &+&   2&+&   3&+&  23*2&+&       1&=&53\\
+Header&+&Size&+&Mask&+&Values&+&Checksum& &\\
+\end{array}
+$$
+~\\
+
+
 
 \subsection{Émulation}
 Pour émuler les interruptions du processeur nous avons choisi dans un
-premier temps d'utiliser une bibliothèque de thread système
+premier temps d'utiliser la bibliothèque de thread standart.
+
+\subsection{}

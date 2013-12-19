@@ -28,9 +28,9 @@ extern uint8_t PORTC;
 extern uint8_t PORTD;
 #endif
 
-#define MAXBUFFERSIZE 50
 #define PINSNUMBER 23
-
+// MAXBUFFERSIZE = 1+2+3+PINSNUMBER*2+1 (cf report)
+#define MAXBUFFERSIZE 53
 struct Pin{
   uint8_t type;
   uint16_t value;

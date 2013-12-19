@@ -29,9 +29,7 @@ elle d'aller lire les octets qui l'interesse dans le buffer RX.
 \end{description}
 
 \paragraph{Algorithme de SetType}
-voici l'algorithme recuperer un des bits du type.
-
-
+voici l'algorithme pour recuperer un des bits du type.
 
 \begin{verbatim}
 if(rx[3+i/8]&(1<<(7-(i%8)))){
@@ -44,40 +42,15 @@ La condition permet de reperer les bits concernés par la commande.
 \begin{itemize}
 \item $3 + (PINSNUMBER + npa*3+1)/8$ permet de recuperer le numéro de l'octet qui code 
 un bit du type de la pin.
-\item le premier des trois permet de se placer au debut masque.
+\item le premier des 3 permet de se placer au debut masque.
 \item PINSNUMBER permet de sauter le masque.
 \item npa represente le nombre de pin déjà traité.
-\item on le multiplie par trois qui correspond au codage du type.
+\item on le multiplie par 3 qui correspond au codage du type.
 \item on divise par 8 pour avoir le nombre de bit.
 \end{itemize}
 
-Nous avons maintenant selectionner le bon octet, il reste a récuperer le bon bit, pour cela nous utilisons l'operateur \& et un décalage vers la droite.
+Nous avons maintenant selectionné le bon octet, il reste a récuperer le bon bit, pour cela nous utilisons l'operateur \& et un décalage vers la droite.
 le ``+1'' correspond au bit du type recherché.
 
 
-%% $
-%% \begin{array}{|c|c|c|c|c|c|c|c|}
-%% \hline
-%% 1&0&1&0&0&0&0&0\\
-%% \hline
-%% \end{array}
-%% ~~
-%% \begin{array}{|c|c|c|c|c|c|c|c|}
-%% \hline
-%% 0&0&0&0&0&0&0&0\\
-%% \hline
-%% \end{array}
-%% ~~
-%% \begin{array}{|c|c|c|c|c|c|c|c|}
-%% \hline
-%% 0&0&0&0&0&0&1&1\\
-%% \hline
-%% \end{array}
-%% ~~
-%% \begin{array}{|c|c|c|c|c|c|c|c|}
-%% \hline
-%% 0&0&0&0&1&0&1&0\\
-%% \hline
-%% \end{array}
-%% $
 

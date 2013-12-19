@@ -1,1 +1,14 @@
-balblabla
+\paragraph{Parsing} 
+
+Le système parse le buffer RX lorsque la différence entre le nombre
+d'octet lu et la taille du paquet indiqué est égale à 0. le système
+lit ensuite l'octet contenant la commande désirée. Ce sera ensuite à
+elle d'aller lire les octets qui l'interesse dans le buffer RX.
+
+\begin{description}
+\item[GetCaps :] La fonction GetCaps va lire le nombre de pin (stocké dans une variable d'environnement) puis écris la trame de la réponse dans le buffer WX.
+\item[Reset:] La fonction Reset appelle la fonction "InitPins" qui remet l'état, la valeur et le type de chaque pin dans l'état initial.
+\item[Ping :] Cette fonction renvoie le version du protocol installée sur la Arduino. Celle-ci est écrite en dur dans le code.
+\item[SetType :] Cette fonction parcours le masque de la trame contenu dans RX et met à jour le type des pins en fonction des valeurs lues.
+\item[GetType :] Cette fonction écris dans WX les types des pins demandé en parcourant le tableau de pin.
+\end{descrition}
